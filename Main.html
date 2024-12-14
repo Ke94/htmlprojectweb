@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鬼滅之刃介紹網</title>
+    <!-- 引入 Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/TitleList.css">
+</head>
+<body>
+    <!-- 導覽列 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="Main.html">鬼滅之刃介紹網</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="切換導航">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="Main.html">首頁</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="Characters.html" id="charactersDropdown" role="button">
+                            角色介紹
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="charactersDropdown">
+                            <li><a class="dropdown-item" href="Characters.html">角色列表</a></li>
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#">人物介紹</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="Characters.html#tanjiro">炭治郎</a></li>
+                                    <li><a class="dropdown-item" href="Characters.html#nezuko">彌豆子</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#">聲優介紹</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="VoiceActors.html#hanenatsuki">花江夏樹</a></li>
+                                    <li><a class="dropdown-item" href="VoiceActors.html#kitouakari">鬼頭明里</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="Story.html">劇情簡介</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Music.html">主題曲</a></li>
+                    <li class="nav-item"><a class="nav-link" href="wallpapers.html">桌布推薦</a></li>
+                    <li class="nav-item"><a class="nav-link" href="quiz.html">快問快答</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首頁 -->
+    <section class="container mt-5">
+        <h1 class="text-center">歡迎來到鬼滅之刃介紹網</h1>
+        <p class="text-center">探索劇情、角色、音樂及更多精彩內容！</p>
+    </section>
+
+    <!-- 劇情簡介 -->
+    <section id="plot" class="container mt-5">
+        <h2>劇情簡介</h2>
+        <p>在這裡，你將了解鬼滅之刃的主要故事情節及背景設置。</p>
+        <button class="btn btn-primary">了解更多</button>
+    </section>
+
+    <!-- 人物介紹 -->
+    <section id="characters" class="container mt-5">
+        <h2>人物介紹</h2>
+        <div class="row">
+            <!-- 炭治郎卡片 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="炭治郎圖片">
+                    <div class="card-body">
+                        <h5 class="card-title">炭治郎</h5>
+                        <p class="card-text">炭治郎是一個善良而堅強的少年，為了拯救妹妹而成為鬼殺隊的一員。</p>
+                        <div class="d-flex justify-content-between">
+                            <a href="Characters.html#tanjiro" class="btn btn-primary">人物介紹</a>
+                            <a href="VoiceActors.html#tanjiro" class="btn btn-secondary">聲優介紹</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 彌豆子卡片 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="彌豆子圖片">
+                    <div class="card-body">
+                        <h5 class="card-title">彌豆子</h5>
+                        <p class="card-text">炭治郎的妹妹，變成鬼後依然對人類保持善良。</p>
+                        <div class="d-flex justify-content-between">
+                            <a href="Characters.html#nezuko" class="btn btn-primary">人物介紹</a>
+                            <a href="VoiceActors.html#nezuko" class="btn btn-secondary">聲優介紹</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- 主題曲 -->
+    <section id="music" class="container mt-5">
+        <h2>主題曲</h2>
+        <p>探索鬼滅之刃的音樂，包括片頭曲、片尾曲和插曲。</p>
+        <button class="btn btn-success">播放主題曲</button>
+    </section>
+
+    <!-- 桌布推薦 -->
+    <section id="wallpapers" class="container mt-5">
+        <h2>桌布推薦</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <img src="https://via.placeholder.com/200" class="img-thumbnail" alt="桌布">
+                <button class="btn btn-secondary mt-2">下載桌布</button>
+            </div>
+            <!-- 可新增更多桌布預覽 -->
+        </div>
+    </section>
+
+    <!-- 快問快答 -->
+    <section id="quiz" class="container mt-5">
+        <h2>快問快答</h2>
+        <p>測試你的鬼滅知識，挑戰排行榜！</p>
+        <button class="btn btn-warning">開始遊戲</button>
+    </section>
+
+    <!-- 引入 Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
