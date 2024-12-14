@@ -68,26 +68,35 @@
 
     <!-- Google 登錄邏輯 -->
     <script>
+        // Google 登錄的回調函數
         function handleCredentialResponse(response) {
-            console.log("Encoded JWT ID token: " + response.credential);
-            
-            // 解碼並解析 Google ID Token
-            const base64Url = response.credential.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
+            try {
+                console.log("Encoded JWT ID token: " + response.credential);
+                
+                // 解碼並解析 Google ID Token
+                const base64Url = response.credential.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                
+                const userInfo = JSON.parse(jsonPayload);
+                console.log("Decoded ID Token:", userInfo);
 
-            console.log("Decoded ID Token:", JSON.parse(jsonPayload));
-
-            // TODO: 根據需求保存或處理使用者資訊
+                // 更新介面：顯示使用者名稱或登出按鈕
+                const navBar = document.querySelector('.navbar-collapse');
+                navBar.innerHTML += `<span class="navbar-text text-white ms-3">歡迎, ${userInfo.name}</span>`;
+            } catch (error) {
+                console.error("處理登錄回應時發生錯誤:", error);
+            }
         }
 
         // 初始化 Google 登錄 API
         window.onload = function () {
             google.accounts.id.initialize({
                 client_id: "825193728202-ji3tncr2jo2gma6q7uo7upgglvdu6ntr.apps.googleusercontent.com",
-                callback: handleCredentialResponse
+                callback: handleCredentialResponse,
+                auto_select: true
             });
 
             google.accounts.id.renderButton(
