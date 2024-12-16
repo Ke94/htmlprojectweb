@@ -7,8 +7,9 @@
     <!-- 引入 Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/TitleList.css">
-    <!-- 引入 Google Identity Services -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- 引入 Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
 </head>
 <body>
     <!-- 導覽列 -->
@@ -40,12 +41,9 @@
                     <li class="nav-item"><a class="nav-link" href="Music.html">主題曲</a></li>
                 </ul>
                 <!-- Google 登錄按鈕 -->
-                <div id="g_id_onload"
-                     data-client_id="825193728202-ji3tncr2jo2gma6q7uo7upgglvdu6ntr.apps.googleusercontent.com"
-                     data-login_uri="https://ke94.github.io/htmlprojectweb/"
-                     data-auto_prompt="false">
+                <div id="authButtons">
+                    <button class="btn btn-outline-light" onclick="googleLogin()">Google 登錄</button>
                 </div>
-                <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="outline"></div>
             </div>
         </div>
     </nav>
@@ -66,46 +64,59 @@
     <!-- 引入 Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Google 登錄邏輯 -->
+    <!-- Firebase 配置與邏輯 -->
     <script>
-        // Google 登錄的回調函數
-        function handleCredentialResponse(response) {
-            try {
-                console.log("Encoded JWT ID token: " + response.credential);
-                
-                // 解碼並解析 Google ID Token
-                const base64Url = response.credential.split('.')[1];
-                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
-                
-                const userInfo = JSON.parse(jsonPayload);
-                console.log("Decoded ID Token:", userInfo);
+        // Firebase 配置
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDwz-ls2myRpX-D_X7vTdThLZLw4Q1Ics",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "htmlproject-a1771",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
-                // 更新介面：顯示使用者名稱或登出按鈕
-                const navBar = document.querySelector('.navbar-collapse');
-                navBar.innerHTML += `<span class="navbar-text text-white ms-3">歡迎, ${userInfo.name}</span>`;
-            } catch (error) {
-                console.error("處理登錄回應時發生錯誤:", error);
-            }
+        // 初始化 Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Google 登錄按鈕邏輯
+        function googleLogin() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log("使用者已登錄:", user);
+                })
+                .catch((error) => {
+                    console.error("登錄失敗:", error);
+                });
         }
 
-        // 初始化 Google 登錄 API
-        window.onload = function () {
-            google.accounts.id.initialize({
-                client_id: "825193728202-ji3tncr2jo2gma6q7uo7upgglvdu6ntr.apps.googleusercontent.com",
-                callback: handleCredentialResponse,
-                auto_select: true
+        // 登出按鈕邏輯
+        function logout() {
+            auth.signOut().then(() => {
+                console.log("使用者已登出");
+            }).catch((error) => {
+                console.error("登出失敗:", error);
             });
+        }
 
-            google.accounts.id.renderButton(
-                document.querySelector(".g_id_signin"),  // 綁定按鈕容器
-                { theme: "outline", size: "medium", shape: "pill" }  // 配置按鈕外觀
-            );
-
-            google.accounts.id.prompt(); // 自動提示用戶登錄
-        };
+        // 監聽使用者狀態變化
+        auth.onAuthStateChanged((user) => {
+            const authButtons = document.getElementById('authButtons');
+            if (user) {
+                // 更新介面，顯示登錄狀態
+                authButtons.innerHTML = `
+                    <span class="navbar-text text-white ms-3">歡迎, ${user.displayName}</span>
+                    <button class="btn btn-outline-danger ms-2" onclick="logout()">登出</button>
+                `;
+            } else {
+                // 未登錄狀態
+                authButtons.innerHTML = `
+                    <button class="btn btn-outline-light" onclick="googleLogin()">Google 登錄</button>
+                `;
+            }
+        });
     </script>
 </body>
 </html>
